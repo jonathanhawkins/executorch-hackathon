@@ -1,0 +1,709 @@
+/* The deck is a fixed 1280x720 stage scaled to fit the window, rather than a
+   responsive layout. A talk needs every slide to look the same on the
+   projector as it did on the laptop, and the only way to guarantee that is to
+   lay out once at a known size and scale the whole thing — font sizes,
+   gaps and image crops all move together. */
+
+.deck-root {
+  --stage-w: 1280px;
+  --stage-h: 720px;
+  --d-bg: #0a0c10;
+  --d-ink: #eef0f6;
+  --d-mute: #8d96a8;
+  --d-dim: #5e677a;
+  --d-line: #242a36;
+  --d-panel: #13161d;
+  --d-panel-2: #191d26;
+  --d-accent: #5ee0a0;
+  --d-accent-2: #6aa8ff;
+  --d-warn: #f0a85e;
+  --d-err: #f0665e;
+
+  position: fixed;
+  inset: 0;
+  background: var(--d-bg);
+  color: var(--d-ink);
+  overflow: hidden;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.deck-viewport {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.deck-stage {
+  width: var(--stage-w);
+  height: var(--stage-h);
+  flex: none;
+  position: relative;
+  background: var(--d-bg);
+  /* The scale is set inline from the measured window size. */
+  transform-origin: center center;
+}
+
+/* --- chrome ------------------------------------------------------------ */
+
+.deck-slide {
+  position: absolute;
+  inset: 0;
+  padding: 56px 64px 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--d-dim);
+  margin-bottom: 18px;
+  flex: none;
+}
+
+.deck-eyebrow .num {
+  color: var(--d-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.deck-eyebrow .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--d-line);
+}
+
+.deck-slide h2 {
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  font-weight: 600;
+  flex: none;
+}
+
+.deck-slide h2 em {
+  font-style: normal;
+  color: var(--d-accent);
+}
+
+.deck-lede {
+  font-size: 17.5px;
+  line-height: 1.48;
+  color: var(--d-mute);
+  margin: 0 0 20px;
+  max-width: 980px;
+  flex: none;
+}
+
+.deck-lede strong {
+  color: var(--d-ink);
+  font-weight: 600;
+}
+
+.deck-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.deck-footer {
+  position: absolute;
+  left: 64px;
+  right: 64px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--d-dim);
+  pointer-events: none;
+}
+
+.deck-footer .bar {
+  flex: 1;
+  height: 2px;
+  background: var(--d-line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.deck-footer .bar i {
+  display: block;
+  height: 100%;
+  background: var(--d-accent);
+  border-radius: 2px;
+  transition: width 220ms ease;
+}
+
+.deck-footer .count {
+  font-variant-numeric: tabular-nums;
+  color: var(--d-mute);
+}
+
+/* --- title slide ------------------------------------------------------- */
+
+.deck-title {
+  justify-content: center;
+  padding: 0 80px;
+}
+
+.deck-title .kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--d-accent);
+  margin-bottom: 22px;
+}
+
+.deck-title h1 {
+  font-size: 68px;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  margin: 0 0 20px;
+  max-width: 960px;
+}
+
+.deck-title h1 span {
+  color: var(--d-dim);
+}
+
+.deck-title .tagline {
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--d-mute);
+  max-width: 760px;
+  margin: 0 0 40px;
+}
+
+.deck-title .meta {
+  display: flex;
+  gap: 28px;
+  font-size: 13px;
+  color: var(--d-dim);
+  letter-spacing: 0.04em;
+}
+
+.deck-title .meta b {
+  display: block;
+  color: var(--d-ink);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0;
+  margin-bottom: 3px;
+}
+
+/* --- section divider -------------------------------------------------- */
+
+.deck-section {
+  justify-content: center;
+  padding: 0 80px;
+}
+
+.deck-section .idx {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--d-accent);
+  margin-bottom: 18px;
+}
+
+.deck-section h1 {
+  font-size: 54px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  margin: 0 0 18px;
+  max-width: 900px;
+}
+
+.deck-section p {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--d-mute);
+  max-width: 740px;
+  margin: 0;
+}
+
+/* --- building blocks -------------------------------------------------- */
+
+.cols {
+  display: grid;
+  gap: 15px;
+  flex: 1;
+  min-height: 0;
+  align-content: start;
+}
+.cols.c2 { grid-template-columns: 1fr 1fr; }
+.cols.c3 { grid-template-columns: repeat(3, 1fr); }
+.cols.c4 { grid-template-columns: repeat(4, 1fr); }
+.cols.wide-left { grid-template-columns: 1.35fr 1fr; }
+.cols.wide-right { grid-template-columns: 1fr 1.35fr; }
+.cols.stretch { align-content: stretch; }
+
+.card {
+  background: var(--d-panel);
+  border: 1px solid var(--d-line);
+  border-radius: 12px;
+  padding: 15px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.card.flush { padding: 0; overflow: hidden; }
+.card.accent { border-color: #2d6b51; background: #10201a; }
+.card.warn { border-color: #5c452a; background: #1d1711; }
+
+.card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.005em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card h3 .tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--d-panel-2);
+  color: var(--d-dim);
+  border: 1px solid var(--d-line);
+}
+.card h3 .tag.ok { color: var(--d-accent); border-color: #2d6b51; }
+.card h3 .tag.no { color: var(--d-err); border-color: #5c2a28; }
+
+.card p {
+  margin: 0;
+  font-size: 13.8px;
+  line-height: 1.48;
+  color: var(--d-mute);
+}
+
+.card p strong,
+.bullets strong {
+  color: var(--d-ink);
+  font-weight: 600;
+}
+
+.card .label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--d-dim);
+}
+
+/* A single number, large, with its unit and caption. */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat .n {
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  color: var(--d-accent);
+}
+.stat .n.blue { color: var(--d-accent-2); }
+.stat .n.plain { color: var(--d-ink); }
+.stat .n small {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--d-mute);
+  margin-left: 3px;
+}
+
+.stat .cap {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--d-mute);
+}
+
+.bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.bullets li {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--d-mute);
+  padding-left: 18px;
+  position: relative;
+}
+
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--d-accent-dim, #3a7f5f);
+}
+
+.bullets.tight li { font-size: 13.5px; gap: 8px; }
+
+/* --- tables ----------------------------------------------------------- */
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tbl th {
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--d-dim);
+  padding: 0 12px 9px;
+  border-bottom: 1px solid var(--d-line);
+  white-space: nowrap;
+}
+
+.tbl td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #1b202a;
+  color: var(--d-mute);
+}
+
+.tbl tbody tr:last-child td { border-bottom: none; }
+
+.tbl td:first-child,
+.tbl th:first-child { padding-left: 0; }
+.tbl td:last-child,
+.tbl th:last-child { padding-right: 0; }
+
+.tbl td.name { color: var(--d-ink); font-weight: 500; }
+.tbl td.hi { color: var(--d-accent); font-weight: 600; }
+.tbl td.bad { color: var(--d-err); }
+.tbl td.num { text-align: right; }
+.tbl th.num { text-align: right; }
+
+.tbl tr.lead td { color: var(--d-ink); }
+.tbl tr.lead td.name { font-weight: 600; }
+
+.tbl .sub {
+  display: block;
+  font-size: 11.5px;
+  color: var(--d-dim);
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+/* --- images ----------------------------------------------------------- */
+
+.shot {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--d-line);
+  background: #000;
+  object-fit: cover;
+  margin: 0;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.figure figcaption {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--d-dim);
+  margin: 0;
+}
+
+.figure figcaption b {
+  color: var(--d-mute);
+  font-weight: 600;
+}
+
+.strip {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border-radius: 10px;
+  border: 1px solid var(--d-line);
+}
+
+/* --- pipeline diagram ------------------------------------------------- */
+
+.flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.flow-step {
+  flex: 1;
+  background: var(--d-panel);
+  border: 1px solid var(--d-line);
+  border-radius: 10px;
+  padding: 13px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.flow-step .where {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--d-dim);
+}
+.flow-step .where.npu { color: var(--d-accent); }
+.flow-step .where.cpu { color: var(--d-accent-2); }
+
+.flow-step .what {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--d-ink);
+  line-height: 1.25;
+}
+
+.flow-step .cost {
+  font-size: 12.5px;
+  color: var(--d-mute);
+  font-variant-numeric: tabular-nums;
+  margin-top: auto;
+}
+
+.flow-arrow {
+  flex: none;
+  width: 30px;
+  display: grid;
+  place-items: center;
+  color: var(--d-dim);
+  font-size: 15px;
+}
+
+/* --- callout ---------------------------------------------------------- */
+
+.callout {
+  border-left: 3px solid var(--d-accent);
+  background: #10201a;
+  border-radius: 0 10px 10px 0;
+  padding: 13px 18px;
+  font-size: 14.5px;
+  line-height: 1.48;
+  color: var(--d-ink);
+}
+
+.callout.warn {
+  border-left-color: var(--d-warn);
+  background: #1d1711;
+}
+
+.callout b { font-weight: 600; }
+.callout .mute { color: var(--d-mute); font-weight: 400; }
+
+code, .mono {
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em;
+  color: #c6d4e8;
+  background: #171c25;
+  border: 1px solid var(--d-line);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* --- grid / overview mode --------------------------------------------- */
+
+.deck-grid {
+  position: absolute;
+  inset: 0;
+  background: #07090c;
+  overflow-y: auto;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  align-content: start;
+}
+
+.deck-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--d-line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--d-bg);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+.deck-thumb:hover { border-color: #3c4759; }
+.deck-thumb[data-current="true"] { border-color: var(--d-accent); }
+
+.deck-thumb .inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 720px;
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+.deck-thumb .cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: linear-gradient(to top, rgba(7, 9, 12, 0.96), rgba(7, 9, 12, 0));
+  padding: 16px 10px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--d-ink);
+  display: flex;
+  gap: 7px;
+}
+
+.deck-thumb .cap span {
+  color: var(--d-dim);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+/* --- help / hud ------------------------------------------------------- */
+
+.deck-hud {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.deck-hud button {
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--d-mute);
+  background: rgba(19, 22, 29, 0.9);
+  border: 1px solid var(--d-line);
+  border-radius: 7px;
+  padding: 6px 11px;
+  cursor: pointer;
+}
+
+.deck-hud button:hover { color: var(--d-ink); border-color: #3c4759; }
+
+.deck-keys {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  font-size: 11px;
+  color: var(--d-dim);
+  z-index: 5;
+  display: flex;
+  gap: 14px;
+  letter-spacing: 0.04em;
+}
+
+.deck-keys kbd {
+  font-family: inherit;
+  font-size: 10px;
+  border: 1px solid var(--d-line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 5px;
+  background: var(--d-panel);
+  color: var(--d-mute);
+  margin-right: 4px;
+}
+
+@media print {
+  .deck-hud, .deck-keys { display: none; }
+}
+
+/* Images in a figure are the one element with no intrinsic ceiling, so they
+   are the usual cause of a slide running past 720px. Cap them here rather
+   than per-slide, and let object-fit decide the crop. */
+.figure .shot {
+  min-height: 0;
+  max-height: 100%;
+}
+
+.figure.fill {
+  flex: 1;
+  min-height: 0;
+}
+
+.figure.fill .shot { flex: 1; }
+
+/* The four-up pipeline strip is 4:1, so left to itself it eats 288px of a
+   720px slide. */
+/* contain, not cover, and sized by height: the strip is four panels side by
+   side, so cropping it vertically beheads all four. Narrower is fine. */
+.strip.capped {
+  max-height: 196px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* An eight-row comparison table is the one shape that will not shrink by
+   rewording. */
+.tbl.dense { font-size: 13px; }
+.tbl.dense td { padding: 6.5px 12px; }
+
+.card p.bad { color: #d98a84; }
+.card p.bad strong { color: #f0a09a; }
+
+/* A drawn diagram takes the room the slide has left, keeps its aspect, and
+   centres in whatever is spare. */
+/* The drawing runs the full width of the slide and its viewBox is sized so
+   that its natural height leaves room for one line underneath — letting it
+   shrink to fit instead just letterboxes it. */
+.diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  flex: none;
+}

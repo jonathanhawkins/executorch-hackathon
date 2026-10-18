@@ -1,0 +1,710 @@
+:root {
+  --bg: #0c0e12;
+  --panel: #14171e;
+  --panel-2: #1b1f28;
+  --line: #262b36;
+  --text: #e8eaf0;
+  --muted: #949cad;
+  --accent: #5ee0a0;
+  --accent-dim: #2a8c63;
+  --warn: #f0a85e;
+  --err: #f0665e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 16px 64px;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+h1 {
+  font-size: 22px;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.deck-link {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent-dim);
+  border-radius: 999px;
+  padding: 5px 13px;
+}
+
+.deck-link:hover {
+  background: rgba(94, 224, 160, 0.1);
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 22px;
+  line-height: 1.5;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.pill {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+.dot.ok { background: var(--accent); }
+.dot.bad { background: var(--err); }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.panel h2 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel .body { padding: 14px; }
+
+.feed {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
+.feed.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+textarea,
+input[type="text"] {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  background: var(--accent);
+  color: #06120c;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: var(--panel-2);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.presets button {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.answer {
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  min-height: 60px;
+}
+
+.muted { color: var(--muted); }
+.err { color: var(--err); font-size: 13px; line-height: 1.5; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.stat .k {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.stat .v {
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+
+.shot {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.spin {
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  margin-right: 7px;
+  vertical-align: -2px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* --- live transcript --- */
+
+.lang-select {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 13px;
+}
+
+.transcript {
+  margin-top: 14px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transcript .line {
+  border-left: 2px solid var(--line);
+  padding-left: 12px;
+}
+
+.transcript .when {
+  font-size: 11px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 3px;
+}
+
+.transcript .said {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.transcript .translated {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.transcript .lang {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-right: 6px;
+  vertical-align: 1px;
+}
+
+/* --- virtual billboard --- */
+
+.billboard-panel { margin-bottom: 18px; }
+
+.billboard-row {
+  display: grid;
+  grid-template-columns: minmax(0, 420px) 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .billboard-row { grid-template-columns: 1fr; }
+}
+
+.billboard-stage {
+  position: relative;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  /* The composite's own shape, so in shot phase the picture fills the
+     stage exactly and the ad overlay lands on the photograph rather than
+     on letterbox bars. The live preview is 4:3 and still letterboxes
+     inside this, which .guide-box already accounts for. */
+  aspect-ratio: 1122 / 1552;
+}
+
+/* The reference sits underneath and the composite fades over it, rather than
+   swapping src — a swap flashes while the other image decodes, and at these
+   sizes the flash is longer than the comparison is useful. */
+.billboard-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.knobs.compare {
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.1));
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+
+.billboard-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.billboard-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 14, 18, 0.72);
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+}
+
+.billboard-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.billboard-side .stats {
+  border-top: none;
+  padding-top: 0;
+}
+
+.knobs { display: flex; flex-direction: column; gap: 8px; }
+
+.knob {
+  display: grid;
+  grid-template-columns: 94px 1fr 44px;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.knob b {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  text-align: right;
+}
+
+.knob-check {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* --- billboard branding, overlaid rather than composited --- */
+
+/* --- the ad --- */
+
+/* System fonts only, deliberately. The whole claim of this demo is that you
+   can unplug the network and it still works, and a Google Fonts <link> would
+   quietly make that false — the page would still render, just not as designed,
+   which is the worst kind of broken because nobody notices on stage. */
+.ad-font {
+  font-family: "Helvetica Neue", Inter, "Segoe UI", system-ui, -apple-system,
+    Arial, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.brand-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  font-family: "Helvetica Neue", Inter, "Segoe UI", system-ui, -apple-system,
+    Arial, sans-serif;
+}
+
+/* The top lockup has the opposite problem to the bottom one. It sits on the
+   backdrop, which is a light store wall in billboard mode but whatever the
+   diffusion model painted in generate mode — often near-black, and the
+   wordmark is near-black by design. So it gets a scrim too, but a light one:
+   the shirt is nowhere near the top of the frame, so there is no product to
+   wash out, and lifting the ground keeps the dark type the design wants
+   instead of flipping it to white on one mode and not the other.
+
+   Same z-index trick as .ad-bottom, for the same reason: scrim at 0, children
+   at 1, never -1. */
+.ad-top {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 5.5cqw 5.5cqw 7cqw;
+  color: #15181d;
+}
+
+.ad-top::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    to top,
+    rgba(244, 242, 238, 0) 0%,
+    rgba(244, 242, 238, 0.52) 34%,
+    rgba(244, 242, 238, 0.82) 70%,
+    rgba(244, 242, 238, 0.92) 100%
+  );
+}
+
+.ad-top > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* The wordmark carries the whole thing, so it gets the tracking. Wide letter
+   spacing on a light weight is the house style of every modern basics label —
+   it reads as confidence because it wastes horizontal space on purpose. */
+.brand-name {
+  font-size: 5.1cqw;
+  font-weight: 400;
+  letter-spacing: 0.44em;
+  /* Tracking adds space after the last letter too, which visually shifts the
+     word left of the margin it is supposed to sit on. */
+  text-indent: 0.44em;
+  margin-left: -0.44em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.brand-rule {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.32;
+  margin: 2.2cqw 0 1.5cqw;
+}
+
+.brand-tag {
+  font-size: 1.45cqw;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: #6a717c;
+  white-space: nowrap;
+}
+
+.ad-badge {
+  font-size: 1.35cqw;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  padding: 0.9cqw 1.5cqw;
+  border: 1px solid rgba(21, 24, 29, 0.35);
+  border-radius: 999px;
+  white-space: nowrap;
+  flex: none;
+}
+
+/* The bottom lockup crosses both the grey backdrop and the navy shirt, so it
+   needs its own ground to stand on. A light band would do it, but it washes
+   the shirt out — and the shirt is the product. A dark scrim with white type
+   darkens the pale corners instead of bleaching the garment, which is what
+   actual lookbooks do and why they all look like this.
+
+   The scrim is z-index 0 under children at z-index 1, NOT z-index -1: this
+   overlay creates no stacking context, so a negative index sends the scrim
+   behind the photograph itself and it simply never appears. */
+.ad-bottom {
+  position: relative;
+  isolation: isolate;
+  padding: 18cqw 5.5cqw 5cqw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 3cqw;
+  color: #fff;
+}
+
+.ad-bottom::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 16, 20, 0) 0%,
+    rgba(14, 16, 20, 0.34) 38%,
+    rgba(14, 16, 20, 0.7) 72%,
+    rgba(14, 16, 20, 0.86) 100%
+  );
+}
+
+.ad-bottom > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ad-product-name {
+  font-size: 3.6cqw;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  line-height: 1.05;
+}
+
+.ad-product-meta {
+  margin-top: 1.2cqw;
+  font-size: 1.45cqw;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.72);
+  text-transform: uppercase;
+}
+
+.ad-price {
+  font-size: 3.6cqw;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  /* Lining figures so the price sits on the same baseline as the name. */
+  font-variant-numeric: lining-nums tabular-nums;
+  flex: none;
+}
+
+.billboard-stage { container-type: inline-size; }
+
+/* --- framing guide --- */
+
+/* The stage is 4:5 (the composite's shape) but the live preview is a 4:3
+   camera frame letterboxed inside it with object-fit: contain, so percentages
+   against the stage are not percentages of the picture — the oval came out
+   1.67x too tall and sat too high. This box reproduces the fitted content:
+   full stage width, 3/4 of that in height (cqw works because .billboard-stage
+   declares container-type: inline-size), centred. Everything the shopper aims
+   at goes inside it, so CSS percentages are frame fractions again and match
+   GUIDE in the daemon. */
+.guide-box {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 75cqw;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.guide-oval {
+  position: absolute;
+  left: 34%;
+  top: 15%;
+  width: 32%;
+  height: 58%;
+  border: 3px dashed rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: border-color 160ms ease;
+}
+
+.guide-oval.ok {
+  border-style: solid;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 9999px rgba(12, 14, 18, 0.28);
+}
+
+/* Eye marks. Not decoration: they are where a face that passes
+   check_alignment actually puts its eyes, derived from the model's own
+   landmarks in the template (eyes 0.337 down the detector's box, separated by
+   0.457 of its width) mapped through the gate's nominal face size. Aiming at
+   them therefore satisfies the same test the oval does, instead of being a
+   second opinion the daemon never checks. */
+.guide-eye {
+  position: absolute;
+  top: 33%;
+  width: 8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-50%);
+}
+.guide-eye.l { left: 26%; }
+.guide-eye.r { right: 26%; }
+.guide-oval.ok .guide-eye { background: var(--accent); }
+
+/* Centre line: line the nose up on it and the head is neither turned nor
+   tilted. Backed by the same gate the oval and the eye marks are —
+   check_alignment measures roll from the eye line and yaw from where the nose
+   sits between the eyes, so aiming at this is a test, not a suggestion. */
+.guide-centre {
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  bottom: 5%;
+  width: 0;
+  border-left: 2px dashed rgba(255, 255, 255, 0.4);
+  transform: translateX(-1px);
+}
+.guide-oval.ok .guide-centre { border-left-color: var(--accent); }
+
+/* The wireframe spans the fitted video box, the same one the oval sits in, so
+   its 640x480 viewBox lines up with the frame the detector measured. */
+.pose-head {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Enough to follow a head without lagging behind it. */
+  transition: opacity 160ms ease;
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.45));
+}
+
+.guide-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5%;
+  text-align: center;
+  font-size: clamp(12px, 2.6cqw, 17px);
+  font-weight: 500;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+  pointer-events: none;
+}
+
+/* The face swap blocks the daemon for ~4s with the preview frozen behind it.
+   Brighter than the other overlays on purpose: this one means "working", not
+   "broken", and it is the only thing moving while the shopper waits. */
+.billboard-overlay.working {
+  color: var(--fg);
+  gap: 10px;
+  background: rgba(12, 14, 18, 0.58);
+}

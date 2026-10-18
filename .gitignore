@@ -1,0 +1,84 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# ExecuTorch artifacts — these are big, never commit them
+*.pte
+*.ptd
+*.bin
+*.etrecord
+*.etdump
+models/
+exports/
+
+# Tokenizers / checkpoints pulled from HF
+*.safetensors
+*.gguf
+tokenizer.model
+tokenizer.json
+
+# Benchmarks & logs
+*.log
+bench_results/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+*.apk
+*.aab
+
+# Next.js web app
+web/node_modules/
+web/.next/
+web/out/
+web/package-lock.json
+
+# Whisper staging (raw mel tensors, regenerated every run)
+.whisper_stage/
+
+# Face-parsing staging (raw calibration tensors, regenerated every run)
+.faceparse_stage/
+
+# Default face-matte outputs
+head.png
+head_classes.png
+
+# Try-on composites
+tryon.png
+
+# Person-segmentation staging (raw calibration tensors, regenerated every run)
+.personseg_stage/
+
+# Default body-matte outputs
+body.png
+body_classes.png
+
+# Stable Diffusion staging (raw CLIP token tensors, regenerated every run)
+.sd_stage/
+
+# Default Stable Diffusion outputs
+sd21.png
+sd21_stats.json
+
+# Face-swap staging (raw tensors + the identity vector, regenerated every run)
+.faceswap_stage/
+
+# Default face-swap outputs
+swapped.png
+ghost_swapped.png
+cn15.png
+cn15_stats.json
+tryon.png
+.tryon_prompts/

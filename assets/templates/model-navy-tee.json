@@ -1,0 +1,43 @@
+{
+  "source": "model-navy-tee.png",
+  "size": [
+    1122,
+    1552
+  ],
+  "jawline": [
+    558,
+    656
+  ],
+  "jawWidth": 138,
+  "faceWidth": 221,
+  "chin": [
+    557,
+    652
+  ],
+  "collar": 775,
+  "landmarks": {
+    "right_eye": [
+      503.0,
+      465.0
+    ],
+    "left_eye": [
+      604.0,
+      458.0
+    ],
+    "nose": [
+      560.0,
+      520.0
+    ],
+    "right_mouth": [
+      522.0,
+      574.0
+    ],
+    "left_mouth": [
+      607.0,
+      566.0
+    ]
+  },
+  "headroom": 150,
+  "dilate": 7,
+  "headSpanRef": 264.0
+}

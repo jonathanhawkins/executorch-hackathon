@@ -1,0 +1,73 @@
+# Model presets for `scripts/export_model.py`.
+#
+# Add a new model by copying a block. Keys map onto `optimum-cli export executorch`
+# flags. Run `python scripts/export_model.py --list` to see them all.
+#
+#   gated = true  -> needs `hf auth login` + license accepted on the HF model page.
+#   qlinear       -> linear-layer quantization. 8da4w = int8 dynamic act / int4 weight.
+#   qembedding    -> embedding-table quantization. 4w or 8w.
+#
+# Keep preset names QUOTED. A bare dot in a TOML key is a table separator, so
+# [presets.llama3.2-1b] silently becomes three nested tables instead of one preset.
+
+[presets."smollm2-135m"]
+model_id = "HuggingFaceTB/SmolLM2-135M-Instruct"
+task = "text-generation"
+recipe = "xnnpack"
+qlinear = "8da4w"
+qembedding = "8w"
+max_seq_len = 1024
+gated = false
+note = "Smoke test. ~135M params, exports in ~3 min. Start here."
+
+[presets."qwen2.5-0.5b"]
+model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+task = "text-generation"
+recipe = "xnnpack"
+qlinear = "8da4w"
+qembedding = "8w"
+max_seq_len = 2048
+gated = false
+note = "Ungated and genuinely usable. Good default for a demo."
+
+[presets."llama3.2-1b"]
+model_id = "meta-llama/Llama-3.2-1B-Instruct"
+task = "text-generation"
+recipe = "xnnpack"
+qlinear = "8da4w"
+qembedding = "4w"
+max_seq_len = 2048
+gated = true
+note = "Official repo. Gated with MANUAL review — approval is not instant."
+
+# Community mirrors of the same weights, without the gate. Use these while the
+# official access request sits in review; switch back once it is approved.
+[presets."llama3.2-1b-open"]
+model_id = "unsloth/Llama-3.2-1B-Instruct"
+task = "text-generation"
+recipe = "xnnpack"
+qlinear = "8da4w"
+qembedding = "4w"
+max_seq_len = 2048
+gated = false
+note = "Ungated mirror of Llama-3.2-1B-Instruct. Same weights, no waiting."
+
+[presets."gemma3-1b"]
+model_id = "google/gemma-3-1b-it"
+task = "text-generation"
+recipe = "xnnpack"
+qlinear = "8da4w"
+qembedding = "4w"
+max_seq_len = 2048
+gated = true
+note = "Official repo. Gated with MANUAL review — approval is not instant."
+
+[presets."gemma3-1b-open"]
+model_id = "unsloth/gemma-3-1b-it"
+task = "text-generation"
+recipe = "xnnpack"
+qlinear = "8da4w"
+qembedding = "4w"
+max_seq_len = 2048
+gated = false
+note = "Ungated mirror of gemma-3-1b-it. Same weights, no waiting."
